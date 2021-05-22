@@ -4,18 +4,21 @@ const Header =(props)=>{
   return(
     <header className="Header">
       <img src="https://pngimg.com/uploads/github/github_PNG28.png"
-        style={{width:"50px", height:"50px",margin:"0% 5%", display:"block"}}
+        className="githubIMG"
         alt="Github png"
       />
       <form onSubmit={(e)=>{
         e.preventDefault()
+        props.setInit(false)
         props.setUsername(username.replace(/\s\\/g,""))
       }}style={{display:"block"}}>
-      <input type="text" name="username" value={props.username}
+      <input type="text" name="username" value={username} autoFocus
+        placeholder="Enter GitHub username"
+        className="usernameInput"
         onChange={(e)=>{
             var tempUsername=e.target.value.replace(/\s\\/g,"")
             setUsername(tempUsername)
-            props.setUsername(tempUsername)
+            //props.setUsername(tempUsername)
         }}/>
       </form>
     </header>
