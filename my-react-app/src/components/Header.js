@@ -3,10 +3,10 @@ const Header =(props)=>{
   const [username, setUsername] = useState("")
   return(
     <header className="Header">
-      <img src="https://pngimg.com/uploads/github/github_PNG28.png"
+      <a target="none" href="https://github.com/"><img src="https://pngimg.com/uploads/github/github_PNG28.png"
         className="githubIMG"
         alt="Github png"
-      />
+      /></a>
       <form onSubmit={(e)=>{
         e.preventDefault()
         props.setInit(false)

@@ -17,17 +17,20 @@ const Main=(props)=>{
     //repos.map(i=><Repo name={i.name} description={i.description}/>)
   }
   return(<div>
-    <Profile profile={props.profile} />
-    <div className="Repos">
-      {(props.repos.length!==0?
-        <div><h3 style={{textAlign:"left"}}>Repositories ({props.repos.length})</h3>
-        {props.repos.slice((sliceNumber-1)*4, sliceNumber*4).map(i=><Repo name={i.name} url={i.html_url} description={i.description}/>)}
-        <Slider sliceNumber={sliceNumber} setSliceNumber={setSliceNumber} numberOfRepos={props.repos.length}/></div>
-        :
-        <InitialState emoji="🗃" text="User has not repos😐"/>
-      )}
-    </div>
-
+    <Profile profileLoaded={props.profileLoaded} profile={props.profile} />
+    {(props.reposLoaded?
+      <div className="Repos">
+        {(props.repos.length!==0?
+          <div><h3 style={{textAlign:"left"}}>Repositories ({props.repos.length})</h3>
+          {props.repos.slice((sliceNumber-1)*4, sliceNumber*4).map(i=><Repo name={i.name} url={i.html_url} description={i.description}/>)}
+          <Slider sliceNumber={sliceNumber} setSliceNumber={setSliceNumber} numberOfRepos={props.repos.length}/></div>
+          :
+          <InitialState emoji="🗃" text="User has not repos😐"/>
+        )}
+      </div>
+    :
+    <div className="loader"></div>
+    )}
     
   </div>)
 }

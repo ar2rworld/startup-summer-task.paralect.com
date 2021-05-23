@@ -9,9 +9,9 @@ const Profile=(props)=>{
   }
   return(<div className="Profile">
     {/*<i>Profile is loading</i>*/}
-    {(props?
+    {(props.profileLoaded?
     <div>
-      <img className="ProfileIMG" src={props.profile.avatar_url} />
+      <img className="ProfileIMG" alt="github Profile IMG" src={props.profile.avatar_url} />
       <h2>{props.profile.name}</h2>
       <h3><a target="none" href={props.profile.html_url}>{props.profile.login}</a></h3>
       <p>👥{formatNumber(props.profile.followers)} followers 👥{formatNumber(props.profile.following)} following</p>
