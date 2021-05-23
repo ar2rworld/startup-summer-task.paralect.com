@@ -15,6 +15,7 @@ const Header =(props)=>{
       <input type="text" name="username" value={username} autoFocus
         placeholder="Enter GitHub username"
         className="usernameInput"
+        pattern="[a-zA-z0-9\-]*"
         onChange={(e)=>{
             var tempUsername=e.target.value.replace(/\s\\/g,"")
             setUsername(tempUsername)

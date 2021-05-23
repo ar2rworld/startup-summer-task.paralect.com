@@ -14,22 +14,23 @@ function App() {
   const [profileLoaded, setProfileLoaded] = useState(false)
   const [reposLoaded, setReposLoaded] = useState(false)
   const handleUsername=(e)=>{
+    console.log("before: " + e)
+    e=e.replace(/\s\//g, "")
+    console.log("after: " + e)
     setUsername(e)
-    e=e.replace(/\s\//g, '')
     getUserRepos(e)
     getUser(e)
-
   }
   const getUserRepos=async (e)=>{
     setReposLoaded(false)
     console.log("started!")
     await octokit.request("GET /users/" + e + "/repos", {})
-    .then(e=>{
+    .then(r=>{
       console.log("Good request")
-      setRepos(e.data)
+      setRepos(r.data)
       setReposLoaded(true)
     })
-    .catch(e=>{
+    .catch(r=>{
       console.log("Bad request")
     });
   }
@@ -37,14 +38,14 @@ function App() {
     setProfileLoaded(false)
     console.log("startedGetUser!")
     await octokit.request("GET /users/" + e , {})
-    .then(e=>{
+    .then(r=>{
       console.log("Good request for user")
-      setProfile(e.data)
+      setProfile(r.data)
       setProfileLoaded(true)
       //console.log(e)
       setProfileStatus(1)
     })
-    .catch(e=>{
+    .catch(r=>{
       console.log("Bad request for user")
       setProfileStatus(0)
     });
