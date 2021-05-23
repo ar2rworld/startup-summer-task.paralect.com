@@ -3,9 +3,8 @@ import Header from './components/Header'
 import Main from './components/Main'
 import InitialState from './components/InitialState'
 import {useState} from 'react'
-import config from './config.json'
 const { Octokit } = require("@octokit/core");
-const octokit = new Octokit({ auth: config['github-token'] });
+const octokit = new Octokit({ auth: process.env.TOKEN });
 function App() {
   const [username, setUsername] = useState("")
   const [init, setInit] = useState(true)
@@ -24,7 +23,7 @@ function App() {
   const getUserRepos=async (e)=>{
     setReposLoaded(false)
     console.log("started!")
-    const response = await octokit.request("GET /users/" + e + "/repos", {})
+    await octokit.request("GET /users/" + e + "/repos", {})
     .then(e=>{
       console.log("Good request")
       setRepos(e.data)
@@ -33,7 +32,6 @@ function App() {
     .catch(e=>{
       console.log("Bad request")
     });
-    console.log(response)
   }
   const getUser=async (e)=>{
     setProfileLoaded(false)
