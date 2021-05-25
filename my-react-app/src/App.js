@@ -21,8 +21,13 @@ function App() {
     e=e.replace(/\s\//g, "")
     console.log("after: " + e)
     setUsername(e)
-    getUserRepos(e, sliceNumber)
+    getUserRepos(e, 1)
+    setSliceNumber(1)
     getUser(e)
+  }
+  const handleSliceNumber=(n)=>{
+    setSliceNumber(n)
+    getUserRepos(username, n)
   }
   const getUserRepos=async (e, page)=>{
     setReposLoaded(false)
@@ -64,7 +69,7 @@ function App() {
       {(!init?
         (profileStatus?<Main reposLoaded={reposLoaded} profileLoaded={profileLoaded}
           profile={profile} repos={repos} username={username} numberOfRepos={numberOfRepos}
-          sliceNumber={sliceNumber} setSliceNumber={setSliceNumber}/>
+          sliceNumber={sliceNumber} setSliceNumber={handleSliceNumber}/>
           :
           <InitialState text="Oh dear, now you have a chance to register a new GitHub user as there is non exist"
             emoji="❌"/>
