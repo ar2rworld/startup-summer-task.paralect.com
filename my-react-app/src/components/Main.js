@@ -6,7 +6,7 @@ import InitialState from './InitialState'
 const Main=(props)=>{
   //Main logic
   const [repos, setRepos] = useState(props.repos)
-  const [sliceNumber, setSliceNumber] = useState(1)
+  //const [sliceNumber, setSliceNumber] = [props.sliceNumber,props.setSliceNumber]
   const [slices, setSlices] = useState(Math.ceil(props.repos.length/4))
   //console.log(Math.ceil(props.repos.length))
   useEffect(()=>{
@@ -25,10 +25,10 @@ const Main=(props)=>{
     {(props.reposLoaded?
       <div className="Repos">
         {(props.repos.length>0 && props.repos!==null?
-          <div><h3 style={{textAlign:"left"}}>Repositories ({props.repos.length})</h3>
-          {props.repos.slice((sliceNumber-1)*4, sliceNumber*4)
+          <div><h3 style={{textAlign:"left"}}>Repositories ({props.numberOfRepos})</h3>
+          {props.repos//.slice((sliceNumber-1)*4, sliceNumber*4)
             .map(i=><Repo name={i.name} url={i.html_url} description={i.description}/>)}
-          <Slider sliceNumber={sliceNumber} setSliceNumber={setSliceNumber} numberOfRepos={props.repos.length}/></div>
+          <Slider sliceNumber={props.sliceNumber} setSliceNumber={props.setSliceNumber} numberOfRepos={props.numberOfRepos}/></div>
           :
           <InitialState emoji="🗃" text="User has not repos😐"/>
         )}

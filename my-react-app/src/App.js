@@ -6,6 +6,7 @@ import {useState} from 'react'
 const { Octokit } = require("@octokit/core");
 const octokit = new Octokit({ auth: process.env.TOKEN });
 function App() {
+  document.title="startup-summer-task.paralect.com"
   const [username, setUsername] = useState("")
   const [init, setInit] = useState(true)
   const [profileStatus, setProfileStatus] = useState(1)
@@ -13,18 +14,20 @@ function App() {
   const [profile, setProfile] = useState([])
   const [profileLoaded, setProfileLoaded] = useState(false)
   const [reposLoaded, setReposLoaded] = useState(false)
+  const [sliceNumber, setSliceNumber] = useState(1)
+  const [numberOfRepos, setNumberOfRepos]=useState(0)
   const handleUsername=(e)=>{
     console.log("before: " + e)
     e=e.replace(/\s\//g, "")
     console.log("after: " + e)
     setUsername(e)
-    getUserRepos(e)
+    getUserRepos(e, sliceNumber)
     getUser(e)
   }
-  const getUserRepos=async (e)=>{
+  const getUserRepos=async (e, page)=>{
     setReposLoaded(false)
     console.log("started!")
-    await octokit.request("GET /users/" + e + "/repos", {})
+    await octokit.request("GET /users/" + e + "/repos", {"page":page, "per_page":"4"})
     .then(r=>{
       console.log("Good request")
       setRepos(r.data)
@@ -42,7 +45,8 @@ function App() {
       console.log("Good request for user")
       setProfile(r.data)
       setProfileLoaded(true)
-      //console.log(e)
+      setNumberOfRepos(r.data.public_repos)
+      //console.log(r)
       setProfileStatus(1)
     })
     .catch(r=>{
@@ -58,7 +62,9 @@ function App() {
       <div style={{height:"60px", display:"block"}}></div>
       
       {(!init?
-        (profileStatus?<Main reposLoaded={reposLoaded} profileLoaded={profileLoaded} profile={profile} repos={repos} username={username}/>
+        (profileStatus?<Main reposLoaded={reposLoaded} profileLoaded={profileLoaded}
+          profile={profile} repos={repos} username={username} numberOfRepos={numberOfRepos}
+          sliceNumber={sliceNumber} setSliceNumber={setSliceNumber}/>
           :
           <InitialState text="Oh dear, now you have a chance to register a new GitHub user as there is non exist"
             emoji="❌"/>

@@ -58,6 +58,9 @@
 .Repo{
   border:1px solid blue;
   margin:2%;
+  text-align: left;
+  padding-left: 20px;
+  background-color:aliceblue;
 }
 .Repos{
   width: 74%;
